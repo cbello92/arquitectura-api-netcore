@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace ArquitecturaAPI.Users.Data
 {
@@ -49,7 +49,7 @@ namespace ArquitecturaAPI.Users.Data
 
                 return usersList;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 throw;
             }
