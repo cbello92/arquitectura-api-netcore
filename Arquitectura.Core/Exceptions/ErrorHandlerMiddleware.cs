@@ -36,6 +36,7 @@ namespace Arquitectura.Core.Exceptions
             {
 
                 var response = context.Response;
+                BussinessException err = null;
                 response.ContentType = "application/json";
                 
                 switch (error)
@@ -46,13 +47,19 @@ namespace Arquitectura.Core.Exceptions
                     case KeyNotFoundException e:
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
+                    case BussinessException e:
+                        err = e;
+                        Console.WriteLine(e);
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
-               
 
-                var result = JsonSerializer.Serialize(new { success = false, errors = error?.Message, statusCode = response.StatusCode });
+                //Console.WriteLine(error);
+
+                var result = JsonSerializer.Serialize(new { success = false, errors = err ?? error, statusCode = response.StatusCode });
                 await response.WriteAsync(result);
             }
         }

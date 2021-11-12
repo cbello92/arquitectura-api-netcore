@@ -17,9 +17,9 @@ namespace ArquitecturaAPI.Users.Data
             _context = context;
         }
 
-        public List<UserDTO> All()
+        public List<UserModel> All()
         {
-            List<UserDTO> usersList = new List<UserDTO>();
+            List<UserModel> usersList = new List<UserModel>();
             DbAccessContext context = null;
 
             try
@@ -28,14 +28,14 @@ namespace ArquitecturaAPI.Users.Data
                 context.Database.OpenConnection();
 
                 DbCommand cmd = context.Database.GetDbConnection().CreateCommand();
-                cmd.CommandText = "SELECT * FROM useraas";
+                cmd.CommandText = "SELECT * FROM users";
                 using var reader = cmd.ExecuteReader();
 
                 //throw new KeyNotFoundException("error");
 
                 while (reader.Read())
                 {
-                    UserDTO UserDTO = new UserDTO
+                    UserModel UserDTO = new UserModel
                     {
                         Id = Convert.ToInt32(reader["id"].ToString()),
                         Name = reader["name"].ToString(),
